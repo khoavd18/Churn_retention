@@ -1,0 +1,47 @@
+STEP 3 DATA SPLIT SUMMARY
+========================================
+Raw dataset shape: (7043, 21)
+
+Processed tables:
+- customers: shape=(7043, 6)
+- subscriptions: shape=(7043, 4)
+- services: shape=(7043, 10)
+- billing: shape=(7043, 4)
+
+Validation checks:
+- total_charges null count: 11
+- customer_id unique in raw: True
+
+Dtypes preview:
+
+[customers]
+  - customer_id: object
+  - gender: object
+  - senior_citizen: int32
+  - partner: object
+  - dependents: object
+  - tenure: int64
+
+[subscriptions]
+  - customer_id: object
+  - contract: object
+  - paperless_billing: object
+  - churn: object
+
+[services]
+  - customer_id: object
+  - phone_service: object
+  - multiple_lines: object
+  - internet_service: object
+  - online_security: object
+  - online_backup: object
+  - device_protection: object
+  - tech_support: object
+  - streaming_tv: object
+  - streaming_movies: object
+
+[billing]
+  - customer_id: object
+  - payment_method: object
+  - monthly_charges: float64
+  - total_charges: float64
