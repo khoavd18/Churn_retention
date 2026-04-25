@@ -1,0 +1,81 @@
+STEP 5 MODEL DATA QUALITY REPORT
+========================================
+Dataset path: data\processed\model_dataset.csv
+Dataset shape: (7032, 34)
+
+Summary status:
+- EDA-ready: YES
+- Step 6 model-ready: NO
+
+Schema validation:
+- missing required columns: None
+- unexpected columns: None
+- dtype issues: None
+
+Key validation results:
+- customer_id nulls: 0
+- customer_id duplicates: 0
+- churn nulls: 0
+- churn unexpected values: None
+- columns with missing values > 0: 0
+- constant columns: is_total_charges_missing
+- binary flag issues: None
+
+Business rule checks:
+- contract vs is_month_to_month mismatches: 0
+- paperless_billing vs is_paperless_billing mismatches: 0
+- negative tenure rows: 0
+- negative monthly_charges rows: 0
+- negative total_charges rows: 0
+
+Target distribution:
+- No: count=5163, pct=0.734215
+- Yes: count=1869, pct=0.265785
+
+Modeling prep flags:
+- identifier columns to exclude before modeling: customer_id
+- constant columns to drop before modeling: is_total_charges_missing
+- overlapping raw + derived column pairs to review before Step 6: contract + is_month_to_month, paperless_billing + is_paperless_billing, online_security + has_online_security, online_backup + has_online_backup, device_protection + has_device_protection, tech_support + has_tech_support, streaming_tv + has_streaming_tv, streaming_movies + has_streaming_movies
+
+Schema / dtypes:
+- customer_id: object
+- gender: object
+- senior_citizen: int64
+- partner: object
+- dependents: object
+- tenure: int64
+- contract: object
+- paperless_billing: object
+- churn: object
+- phone_service: object
+- multiple_lines: object
+- internet_service: object
+- online_security: object
+- online_backup: object
+- device_protection: object
+- tech_support: object
+- streaming_tv: object
+- streaming_movies: object
+- payment_method: object
+- monthly_charges: float64
+- total_charges: float64
+- tenure_group: object
+- is_new_customer: int64
+- is_month_to_month: int64
+- is_paperless_billing: int64
+- has_online_security: int64
+- has_online_backup: int64
+- has_device_protection: int64
+- has_tech_support: int64
+- has_streaming_tv: int64
+- has_streaming_movies: int64
+- monthly_charge_band: object
+- is_electronic_check: int64
+- is_total_charges_missing: int64
+
+EDA blockers:
+- No blocking data quality issues found for EDA.
+
+Required fixes before Step 6:
+- Exclude identifier columns before modeling: customer_id.
+- Drop constant columns before modeling: is_total_charges_missing.

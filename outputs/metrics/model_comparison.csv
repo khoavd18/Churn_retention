@@ -1,0 +1,4 @@
+model,train_rows,test_rows,feature_count,numeric_feature_count,categorical_feature_count,accuracy,precision,recall,f1,roc_auc,predicted_positive_rate,true_positives,false_negatives,false_positives,true_negatives
+GradientBoostingClassifier,5625,1407,32,15,17,0.79602,0.641694,0.526738,0.578561,0.838697,0.218195,197,177,110,923
+LogisticRegression,5625,1407,32,15,17,0.793888,0.632911,0.534759,0.57971,0.834529,0.224591,200,174,116,917
+RandomForestClassifier,5625,1407,32,15,17,0.783937,0.618243,0.489305,0.546269,0.813195,0.210377,183,191,113,920

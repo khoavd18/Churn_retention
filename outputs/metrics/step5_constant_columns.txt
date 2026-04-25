@@ -1,0 +1,9 @@
+STEP 5 CONSTANT COLUMNS
+========================================
+Found 1 constant column(s):
+- is_total_charges_missing | distinct_count=1 | constant_value=0
+
+Required action before Step 6:
+- Drop or exclude constant columns from the modeling feature set.
+- is_total_charges_missing is constant because Step 4 removed rows with missing total_charges.
+- Keep it flagged in quality review, but do not pass it into modeling.

@@ -64,6 +64,7 @@ BILLING_COLS = [
     "payment_method",
     "monthly_charges",
     "total_charges",
+    "total_charges_missing_flag",
 ]
 
 
@@ -103,6 +104,14 @@ def strip_whitespace(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def normalize_missing_values(df: pd.DataFrame) -> pd.DataFrame:
+    total_charges_missing = df["total_charges"].astype(str).str.strip().isin(["", "nan"])
+    df["total_charges_missing_flag"] = total_charges_missing.astype(int)
+
+    # tenure=0 usually means the customer has not completed a billing cycle yet.
+    # Keep the imputation conservative and preserve the original missingness in a flag.
+    new_customer_missing_total = pd.to_numeric(df["tenure"], errors="coerce").eq(0) & total_charges_missing
+    df.loc[new_customer_missing_total, "total_charges"] = 0
+
     # Chuẩn hóa các chuỗi rỗng / khoảng trắng thành NA
     for col in df.columns:
         if df[col].dtype == "object":
@@ -115,6 +124,7 @@ def cast_data_types(df: pd.DataFrame) -> pd.DataFrame:
     df["tenure"] = pd.to_numeric(df["tenure"], errors="coerce")
     df["monthly_charges"] = pd.to_numeric(df["monthly_charges"], errors="coerce")
     df["total_charges"] = pd.to_numeric(df["total_charges"], errors="coerce")
+    df["total_charges_missing_flag"] = pd.to_numeric(df["total_charges_missing_flag"], errors="coerce").fillna(0).astype(int)
     return df
 
 
@@ -165,14 +175,22 @@ def save_tables(tables: dict[str, pd.DataFrame]) -> None:
         log(f"Saved {table_name}: {output_path} | shape={table_df.shape}")
 
 
-def write_summary_report(raw_df: pd.DataFrame, tables: dict[str, pd.DataFrame]) -> None:
+def write_summary_report(cleaned_df: pd.DataFrame, tables: dict[str, pd.DataFrame]) -> None:
     report_path = REPORTS_DIR / "step3_data_split_summary.txt"
 
-    total_charges_nulls = int(raw_df["total_charges"].isna().sum())
+    original_missing_total_charges = int(cleaned_df["total_charges_missing_flag"].sum())
+    remaining_total_charges_nulls = int(cleaned_df["total_charges"].isna().sum())
+    imputed_new_customer_totals = int(
+        (
+            cleaned_df["tenure"].eq(0)
+            & cleaned_df["total_charges_missing_flag"].eq(1)
+            & cleaned_df["total_charges"].eq(0)
+        ).sum()
+    )
     lines = [
         "STEP 3 DATA SPLIT SUMMARY",
         "=" * 40,
-        f"Raw dataset shape: {raw_df.shape}",
+        f"Raw dataset shape: {cleaned_df.shape}",
         "",
         "Processed tables:",
     ]
@@ -184,8 +202,10 @@ def write_summary_report(raw_df: pd.DataFrame, tables: dict[str, pd.DataFrame]) 
         [
             "",
             "Validation checks:",
-            f"- total_charges null count: {total_charges_nulls}",
-            f"- customer_id unique in raw: {raw_df['customer_id'].nunique() == len(raw_df)}",
+            f"- total_charges originally missing: {original_missing_total_charges}",
+            f"- total_charges filled with 0 for tenure=0: {imputed_new_customer_totals}",
+            f"- total_charges null count after cleaning: {remaining_total_charges_nulls}",
+            f"- customer_id unique in raw: {cleaned_df['customer_id'].nunique() == len(cleaned_df)}",
             "",
             "Dtypes preview:",
         ]

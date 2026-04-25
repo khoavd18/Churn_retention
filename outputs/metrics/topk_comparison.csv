@@ -1,0 +1,7 @@
+model,top_k,selected_count,churners_captured,precision_at_k,recall_at_k
+LogisticRegression,0.05,71,55,0.774648,0.147059
+LogisticRegression,0.1,141,98,0.695035,0.262032
+LogisticRegression,0.2,282,186,0.659574,0.497326
+GradientBoostingClassifier,0.05,71,60,0.84507,0.160428
+GradientBoostingClassifier,0.1,141,106,0.751773,0.283422
+GradientBoostingClassifier,0.2,282,182,0.64539,0.486631

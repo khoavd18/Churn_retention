@@ -1,5 +1,12 @@
 # Data Schema
 
+## Data Cleaning Notes
+
+### total_charges
+- **Issue:** 11 new customers (`tenure=0`) have missing `TotalCharges`
+- **Solution:** Set `total_charges = 0` for `tenure=0` and store the original missingness in `total_charges_missing_flag`
+- **Rationale:** `tenure=0` usually means the customer has not completed a billing cycle yet, while the flag preserves the raw data quality signal
+
 ## customers
 Customer master attributes used for demographic and tenure-based analysis.
 
@@ -43,3 +50,4 @@ Columns:
 - payment_method
 - monthly_charges
 - total_charges
+- total_charges_missing_flag

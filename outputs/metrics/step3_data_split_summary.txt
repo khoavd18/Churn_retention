@@ -1,15 +1,17 @@
 STEP 3 DATA SPLIT SUMMARY
 ========================================
-Raw dataset shape: (7043, 21)
+Raw dataset shape: (7043, 22)
 
 Processed tables:
 - customers: shape=(7043, 6)
 - subscriptions: shape=(7043, 4)
 - services: shape=(7043, 10)
-- billing: shape=(7043, 4)
+- billing: shape=(7043, 5)
 
 Validation checks:
-- total_charges null count: 11
+- total_charges originally missing: 11
+- total_charges filled with 0 for tenure=0: 11
+- total_charges null count after cleaning: 0
 - customer_id unique in raw: True
 
 Dtypes preview:
@@ -45,3 +47,4 @@ Dtypes preview:
   - payment_method: object
   - monthly_charges: float64
   - total_charges: float64
+  - total_charges_missing_flag: int32

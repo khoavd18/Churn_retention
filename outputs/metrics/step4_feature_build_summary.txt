@@ -1,0 +1,42 @@
+STEP 4 FEATURE BUILD SUMMARY
+========================================
+feature_base row count: 7043
+model_dataset row count: 7032
+dropped row count: 11
+missing total_charges count: 11
+
+Final column list:
+- customer_id
+- gender
+- senior_citizen
+- partner
+- dependents
+- tenure
+- contract
+- paperless_billing
+- churn
+- phone_service
+- multiple_lines
+- internet_service
+- online_security
+- online_backup
+- device_protection
+- tech_support
+- streaming_tv
+- streaming_movies
+- payment_method
+- monthly_charges
+- total_charges
+- tenure_group
+- is_new_customer
+- is_month_to_month
+- is_paperless_billing
+- has_online_security
+- has_online_backup
+- has_device_protection
+- has_tech_support
+- has_streaming_tv
+- has_streaming_movies
+- monthly_charge_band
+- is_electronic_check
+- is_total_charges_missing

@@ -1,0 +1,3 @@
+scenario,model,operating_setup,selected_customers,observed_churners_captured,expected_recovered_customers,campaign_cost,expected_retained_value,expected_net_value
+Threshold 0.40,GradientBoostingClassifier,Score threshold >= 0.40,419,252,37.8,2095.0,7560.0,5465.0
+Top 10% targeting,GradientBoostingClassifier,Highest-risk 10% of customers,141,106,15.9,705.0,3180.0,2475.0
